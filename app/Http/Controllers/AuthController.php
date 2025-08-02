@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Auth\RegisterNewUserAction;
 use App\Exceptions\SystemBadRequestException;
+use App\Http\Requests\UserRegistrationRequest;
 use App\Http\Resources\AuthUserResource;
 use App\Http\Resources\UserResource;
 use Auth;
@@ -50,5 +52,12 @@ class AuthController extends Controller
             'data' => new UserResource($user),
             'message' => 'User resource retrieved successfully',
         ]);
+    }
+
+    public function register(UserRegistrationRequest $request, RegisterNewUserAction $action)
+    {
+        $data = $request->all();
+
+        return $action->execute();
     }
 }
