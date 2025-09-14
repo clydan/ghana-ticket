@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Auth\LoginAction;
+use App\Actions\Auth\MeAction;
 use App\Actions\Auth\RegisterNewUserAction;
 use App\Exceptions\SystemBadRequestException;
 use App\Http\Requests\UserRegistrationRequest;
@@ -9,55 +11,29 @@ use App\Http\Resources\AuthUserResource;
 use App\Http\Resources\UserResource;
 use Auth;
 use Illuminate\Http\Request;
+use LogoutAction;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(Request $request, LoginAction $action)
     {
         $loginCredentials = $request->only('email', 'password');
 
-        if (Auth::attempt($loginCredentials)){
-            $user = auth()->user();
-
-            return response()->json([
-                'status' => 200,
-                'data' => new AuthUserResource($user),
-                'message' => 'Authentication successful.',
-            ]);
-        }
-
-       return throw new SystemBadRequestException('Authentication failed. Check email and password.');
+        return $action->execute($loginCredentials);
     }
 
-    public function logout()
+    public function logout(LogoutAction $action)
     {
-        $user = Auth::user();
-        $currentAccessToken = $user->currentAccessToken();
-        $currentAccessToken->expires_at = now();
-        $currentAccessToken->save();
-
-        return response()->json([
-            'status' => 200,
-            'data' => null,
-            'message' => 'Logged out successfully.'
-        ]);
+        return $action->execute();
     }
 
-    public function me()
+    public function me(MeAction $action)
     {
-        $user = Auth::user();
-
-        return response()->json([
-            'status' => 200,
-            'data' => new UserResource($user),
-            'message' => 'User resource retrieved successfully',
-        ]);
+        return $action->execute();
     }
 
     public function register(UserRegistrationRequest $request, RegisterNewUserAction $action)
     {
-        $data = $request->all();
-
         return $action->execute();
     }
 }
