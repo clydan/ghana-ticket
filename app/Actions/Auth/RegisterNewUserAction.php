@@ -2,7 +2,10 @@
 
 namespace App\Actions\Auth;
 
+use App\Actions\Business\RegisterNewBusiness;
+use App\DTOs\RegisterBusinessDto;
 use App\Http\Resources\UserResource;
+use DB;
 use Hash;
 use App\Models\User;
 
@@ -19,14 +22,38 @@ class RegisterNewUserAction
             'password' => Hash::make(request()->password),
         ];
 
-        $newUserRecord = User::create($data);
+        DB::transaction(function () use ($data) {
+            $newUserRecord = User::create($data);
 
-        $newUserRecord->refresh();
+            $newUserRecord->refresh();
+
+            $businessInfoDto = $this->prepDto($newUserRecord);
+
+            $newBusiness = (new RegisterNewBusiness())->execute($businessInfoDto);
+
+            if ($newBusiness === false) {
+                throw new \Exception('Business registration failed');
+            }
+
+        });
 
         return response()->json([
             'status' => 200,
-            'data' => new UserResource($newUserRecord),
+            'data' => null,
             'message' => 'User successfully registered.'
         ]);
+    }
+
+    private function prepDto($user): RegisterBusinessDto
+    {
+        $data = [
+            'businessName' => request()->business_name,
+            'businessAddress' => request()->business_address,
+            'businessCity' => request()->business_city,
+            'businessEmail' => request()->business_email,
+            'user' => $user,
+        ];
+
+        return RegisterBusinessDto::from($data);
     }
 }
