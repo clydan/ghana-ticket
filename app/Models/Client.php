@@ -23,13 +23,18 @@ class Client extends Model
         'business_contact', 
         'tax_identification_number',
         'business_description',
-        'merchant_code',
     ];
 
     public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'client_id');
     }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'organizer_id');
+    }
+
     protected static function boot()
     {
         parent::boot();
