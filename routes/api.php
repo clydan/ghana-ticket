@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HeroMediaController;
+use App\Http\Controllers\TicketMediaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -30,8 +31,8 @@ Route::prefix('/events')->group(function () {
         // TODO: make most of these invokable controllers 
 
         Route::post('/hero', HeroMediaController::class)->middleware(['auth:sanctum']);
-        Route::post('/key-event-details', [EventMediaController::class, 'uploadGallery'])->middleware(['auth:sanctum']);
-        Route::post('/tickets', [EventMediaController::class, 'uploadTicket'])->middleware(['auth:sanctum']);
+        Route::post('/key-event-details', [EventMediaController::class, 'uploadGallery'])->middleware(['auth:sanctum']); // skip for now
+        Route::post('/ticket', TicketMediaController::class)->middleware(['auth:sanctum']);
         Route::post('/bios', [EventMediaController::class, 'uploadBio'])->middleware(['auth:sanctum']);
         Route::post('/description', [EventMediaController::class, 'uploadDescription'])->middleware(['auth:sanctum']);
         Route::post('/sponsors', [EventMediaController::class, 'uploadSponsor'])->middleware(['auth:sanctum']);

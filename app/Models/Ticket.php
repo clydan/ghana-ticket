@@ -37,4 +37,9 @@ class Ticket extends Model
     {
         return $this->belongsTo(TicketType::class, 'ticket_type_id');
     }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }
