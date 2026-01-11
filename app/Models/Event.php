@@ -46,4 +46,9 @@ class Event extends Model
     {
         return $this->hasMany(Ticket::class, 'event_id');
     }
+
+    public function heroMedia()
+    {
+        return $this->hasOne(HeroMedia::class, 'event_id');
+    }
 }
