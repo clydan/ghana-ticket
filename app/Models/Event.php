@@ -56,4 +56,9 @@ class Event extends Model
     {
         return $this->hasOne(EventBio::class, 'event_id');
     }
+
+    public function sponsors()
+    {
+        return $this->hasMany(Sponsor::class, 'event_id');
+    }
 }
