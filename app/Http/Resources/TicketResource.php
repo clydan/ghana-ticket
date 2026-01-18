@@ -22,6 +22,7 @@ class TicketResource extends JsonResource
             'sales_start_datetime' => $this->sales_start_datetime,
             'sales_end_datetime' => $this->sales_end_datetime,
             'ticket_type' => new EventTicketTypeResource($this->ticketType),
+            'image' => new ImageResource($this->image),
         ];
     }
 }

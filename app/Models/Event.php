@@ -46,4 +46,29 @@ class Event extends Model
     {
         return $this->hasMany(Ticket::class, 'event_id');
     }
+
+    public function heroMedia()
+    {
+        return $this->hasOne(HeroMedia::class, 'event_id');
+    }
+
+    public function bio()
+    {
+        return $this->hasOne(EventBio::class, 'event_id');
+    }
+
+    public function sponsors()
+    {
+        return $this->hasMany(Sponsor::class, 'event_id');
+    }
+
+    public function venue()
+    {
+        return $this->hasOne(EventVenue::class, 'event_id');
+    }
+
+    public function faqs()
+    {
+        return $this->hasMany(Faq::class, 'event_id');
+    }
 }
