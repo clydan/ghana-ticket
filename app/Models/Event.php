@@ -61,4 +61,9 @@ class Event extends Model
     {
         return $this->hasMany(Sponsor::class, 'event_id');
     }
+
+    public function venue()
+    {
+        return $this->hasOne(EventVenue::class, 'event_id');
+    }
 }

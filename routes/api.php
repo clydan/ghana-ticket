@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventBioController;
 use App\Http\Controllers\EventSponsorsController;
+use App\Http\Controllers\EventVenueController;
 use App\Http\Controllers\HeroMediaController;
 use App\Http\Controllers\TicketMediaController;
 use Illuminate\Http\Request;
@@ -33,15 +34,15 @@ Route::prefix('/events')->group(function () {
         // TODO: make most of these invokable controllers 
 
         Route::post('/hero', HeroMediaController::class)->middleware(['auth:sanctum']);
-        Route::post('/key-event-details', [EventMediaController::class, 'uploadGallery'])->middleware(['auth:sanctum']); // skip for now
+        // Route::post('/key-event-details', [EventMediaController::class, 'uploadGallery'])->middleware(['auth:sanctum']); // skip for now
         Route::post('/ticket', TicketMediaController::class)->middleware(['auth:sanctum']);
         Route::post('/bio', EventBioController::class)->middleware(['auth:sanctum']);
         // Route::post('/description', [EventMediaController::class, 'uploadDescription'])->middleware(['auth:sanctum']); // part of the bio
         Route::post('/sponsors', EventSponsorsController::class)->middleware(['auth:sanctum']);
-        Route::post('/venue', [EventMediaController::class, 'uploadVenue'])->middleware(['auth:sanctum']);
-        Route::post('/schedule', [EventMediaController::class, 'uploadSchedule'])->middleware(['auth:sanctum']);
-        Route::post('/legal-info', [EventMediaController::class, 'uploadLegalInfo'])->middleware(['auth:sanctum']);
+        Route::post('/venue', EventVenueController::class)->middleware(['auth:sanctum']);
+        // Route::post('/schedule', [EventMediaController::class, 'uploadSchedule'])->middleware(['auth:sanctum']);
+        // Route::post('/legal-info', [EventMediaController::class, 'uploadLegalInfo'])->middleware(['auth:sanctum']);
         Route::post('/faq', [EventMediaController::class, 'uploadFaq'])->middleware(['auth:sanctum']);
-        Route::post('/footer', [EventMediaController::class, 'uploadFooter'])->middleware(['auth:sanctum']);
+        // Route::post('/footer', [EventMediaController::class, 'uploadFooter'])->middleware(['auth:sanctum']); // this will have social media.
     });
 });
