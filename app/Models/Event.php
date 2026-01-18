@@ -66,4 +66,9 @@ class Event extends Model
     {
         return $this->hasOne(EventVenue::class, 'event_id');
     }
+
+    public function faqs()
+    {
+        return $this->hasMany(Faq::class, 'event_id');
+    }
 }

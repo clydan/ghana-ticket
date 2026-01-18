@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventBioController;
 use App\Http\Controllers\EventSponsorsController;
 use App\Http\Controllers\EventVenueController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HeroMediaController;
 use App\Http\Controllers\TicketMediaController;
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ Route::prefix('/events')->group(function () {
         Route::post('/venue', EventVenueController::class)->middleware(['auth:sanctum']);
         // Route::post('/schedule', [EventMediaController::class, 'uploadSchedule'])->middleware(['auth:sanctum']);
         // Route::post('/legal-info', [EventMediaController::class, 'uploadLegalInfo'])->middleware(['auth:sanctum']);
-        Route::post('/faq', [EventMediaController::class, 'uploadFaq'])->middleware(['auth:sanctum']);
+        Route::post('/faq', FaqController::class)->middleware(['auth:sanctum']);
         // Route::post('/footer', [EventMediaController::class, 'uploadFooter'])->middleware(['auth:sanctum']); // this will have social media.
     });
 });
