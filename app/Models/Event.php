@@ -51,4 +51,9 @@ class Event extends Model
     {
         return $this->hasOne(HeroMedia::class, 'event_id');
     }
+
+    public function bio()
+    {
+        return $this->hasOne(EventBio::class, 'event_id');
+    }
 }

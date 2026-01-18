@@ -35,6 +35,7 @@ class EventResource extends JsonResource
             'status' => $this->status,
             'organizer' => new ClientResource($this->client),
             'tickets' => TicketResource::collection($this->tickets),
+            'bio' => new EventBioResource($this->bio),
         ];
     }
 }
