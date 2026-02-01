@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Event extends Model
 {
@@ -24,6 +24,7 @@ class Event extends Model
         'early_bird_deadline',
         'refund_policy',
         'published_at',
+        'slug',
     ];
 
     protected static function boot()
@@ -34,7 +35,19 @@ class Event extends Model
             if (empty($model->uuid)) {
                 $model->uuid = (string) Str::uuid();
             }
+
+            if (empty($model->slug)) {
+                $model->slug = static::generateUniqueSlug($model->name);
+            }
         });
+    }
+
+    private static function generateUniqueSlug($name)
+    {
+        $slug = Str::slug($name);
+        $count = static::where('slug', 'LIKE', "{$slug}%")->count();
+
+        return $count ? "{$slug}-{$count}" : $slug;
     }
 
     public function client()

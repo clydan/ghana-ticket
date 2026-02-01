@@ -23,6 +23,7 @@ class Client extends Model
         'business_contact', 
         'tax_identification_number',
         'business_description',
+        'slug',
     ];
 
     public function user()
@@ -43,6 +44,18 @@ class Client extends Model
             if (empty($model->uuid)) {
                 $model->uuid = (string) Str::uuid();
             }
+
+            if (empty($model->slug)) {
+                $model->slug = static::generateUniqueSlug($model->business_name);
+            }
         });
+    }
+
+    private static function generateUniqueSlug($name)
+    {
+        $slug = Str::slug($name);
+        $count = static::where('slug', 'LIKE', "{$slug}%")->count();
+
+        return $count ? "{$slug}-{$count}" : $slug;
     }
 }
