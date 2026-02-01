@@ -47,3 +47,7 @@ Route::prefix('/events')->group(function () {
         // Route::post('/footer', [EventMediaController::class, 'uploadFooter'])->middleware(['auth:sanctum']); // this will have social media.
     });
 });
+
+Route::get('/{username}/{eventname}', [EventController::class, 'getPublicEvents']);
+
+Route::get('/events', [EventController::class, 'getPublicEventsList']);
