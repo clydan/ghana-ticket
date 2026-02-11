@@ -16,6 +16,13 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+/**
+ *TODO: revamp the registration flow to allow users to first register and then select the type of account they want (business, individual, etc). 
+ *This will make the registration process smoother and less overwhelming for users. We can then prompt them to fill in the necessary details based 
+ *on the type of account they select. This will also allow us to implement a more flexible and scalable registration system that can accommodate different types of users in the future.
+ * 
+ */
+
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);

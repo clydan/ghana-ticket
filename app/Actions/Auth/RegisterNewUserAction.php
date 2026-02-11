@@ -5,6 +5,7 @@ namespace App\Actions\Auth;
 use App\Actions\Business\RegisterNewBusiness;
 use App\DTOs\RegisterBusinessDto;
 use App\Http\Resources\UserResource;
+use Arr;
 use DB;
 use Hash;
 use App\Models\User;
@@ -23,7 +24,11 @@ class RegisterNewUserAction
         ];
 
         DB::transaction(function () use ($data) {
-            $newUserRecord = User::create($data);
+            // TODO: add more checks to make sure that same data is not being stored twice.
+            $newUserRecord = User::updateOrCreate(
+                ['email' => Arr::get($data, 'email')],
+                $data
+            );
 
             $newUserRecord->refresh();
 

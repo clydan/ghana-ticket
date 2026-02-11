@@ -9,6 +9,9 @@ class RegisterNewBusiness
 {
     public function execute(RegisterBusinessDto $data)
     {
+
+        // TODO: Use update or create to make sure that same business is not being stored twice. This will be based on the business email for now, but we can add more checks later.
+
         $businessRecord = new Client();
 
         $code = $this->generateUniqueCode();
