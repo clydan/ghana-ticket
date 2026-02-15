@@ -36,6 +36,11 @@ class Client extends Model
         return $this->hasMany(Event::class, 'organizer_id');
     }
 
+    public function businessType()
+    {
+        return $this->belongsTo(BusinessType::class, 'business_type_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

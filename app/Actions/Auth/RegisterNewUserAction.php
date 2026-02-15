@@ -23,24 +23,12 @@ class RegisterNewUserAction
             'password' => Hash::make(request()->password),
         ];
 
-        DB::transaction(function () use ($data) {
-            // TODO: add more checks to make sure that same data is not being stored twice.
-            $newUserRecord = User::updateOrCreate(
-                ['email' => Arr::get($data, 'email')],
-                $data
-            );
-
-            $newUserRecord->refresh();
-
-            $businessInfoDto = $this->prepDto($newUserRecord);
-
-            $newBusiness = (new RegisterNewBusiness())->execute($businessInfoDto);
-
-            if ($newBusiness === false) {
-                throw new \Exception('Business registration failed');
-            }
-
-        });
+        // TODO: add more checks to make sure that same data is not being stored twice.
+        
+        $newUserRecord = User::updateOrCreate(
+            ['email' => Arr::get($data, 'email')],
+            $data
+        );
 
         return response()->json([
             'status' => 200,
