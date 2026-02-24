@@ -12,6 +12,12 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: 'api/v1',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
+
+        then: function (){
+            Route::middleware('api')
+            ->prefix('admin/v1')
+            ->group(base_path('routes/admin.php'));
+        }
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(HandleCors::class);

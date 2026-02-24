@@ -1,26 +1,43 @@
 <?php
 
-use App\Http\Controllers\EventBioController;
-use App\Http\Controllers\EventSponsorsController;
-use App\Http\Controllers\EventVenueController;
-use App\Http\Controllers\FaqController;
-use App\Http\Controllers\HeroMediaController;
-use App\Http\Controllers\TicketMediaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventBioController;
+use App\Http\Controllers\HeroMediaController;
 use App\Http\Controllers\EventMediaController;
+use App\Http\Controllers\EventVenueController;
+use App\Http\Controllers\AccountTypeController;
+use App\Http\Controllers\TicketMediaController;
+use App\Http\Controllers\EventSponsorsController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+/**
+ *TODO: revamp the registration flow to allow users to first register and then select the type of account they want (business, individual, etc). 
+ *This will make the registration process smoother and less overwhelming for users. We can then prompt them to fill in the necessary details based 
+ *on the type of account they select. This will also allow us to implement a more flexible and scalable registration system that can accommodate different types of users in the future.
+ * 
+ */
 
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
 Route::get('/me', [AuthController::class, 'me'])->middleware(['auth:sanctum']);
 Route::post('/register', [AuthController::class, 'register']);
+
+Route::prefix('/account')
+->middleware(['auth:sanctum'])
+->group(function(){
+    Route::get('/types', [AccountTypeController::class, 'getAccountTypes']);
+    Route::get('/types/business', [AccountTypeController::class, 'getBusinessTypes']);
+    Route::post('/types', [AccountTypeController::class, 'createAccountType']); 
+    Route::post('/types/business', [AccountTypeController::class, 'createBusinessType']);
+});
 
 Route::prefix('/events')->group(function () {
     Route::get('/', [EventController::class, 'getEvents'])->middleware(['auth:sanctum']);

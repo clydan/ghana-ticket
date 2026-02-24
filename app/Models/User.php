@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->belongsTo(Client::class, 'client_id');
     }
 
+    public function accountType()
+    {
+        return $this->belongsTo(AccountType::class, 'account_type_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

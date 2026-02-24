@@ -44,6 +44,8 @@ class UserTableSeeder extends Seeder
 
             $user->client_id = $client->id;
             $user->save();
+
+            $user->assignRole('admin');
         });
     }
 }
