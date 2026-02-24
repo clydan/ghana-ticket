@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Business\CreateBusinessAction;
+use App\Actions\Business\CreateBusinessTypeAction;
 use App\Actions\Business\GetBusinessType;
 use App\Actions\User\GetAccountType;
 use App\Http\Requests\CreateAccountTypeRequest;
+use App\Http\Requests\CreateBusinessTypeRequest;
 use Illuminate\Http\Request;
 
 class AccountTypeController extends Controller
@@ -21,6 +23,11 @@ class AccountTypeController extends Controller
     }
 
     public function createAccountType(CreateAccountTypeRequest $request, CreateBusinessAction $action)
+    {
+        return $action->execute();
+    }
+
+    public function createBusinessType(CreateBusinessTypeRequest $request, CreateBusinessTypeAction $action)
     {
         return $action->execute();
     }

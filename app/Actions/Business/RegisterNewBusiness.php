@@ -16,17 +16,28 @@ class RegisterNewBusiness
 
         $code = $this->generateUniqueCode();
 
-        $businessRecord->business_name = $data->businessName;
-        $businessRecord->address = $data->businessAddress;
-        $businessRecord->city = $data->businessCity;
-        $businessRecord->business_email = $data->businessEmail;
-        $businessRecord->activation_level = '1';
+        $businessRecord->business_name = $data->business_name;
+        $businessRecord->address = $data->address;
+        $businessRecord->country = $data->country;
+        $businessRecord->city = $data->city;
+        $businessRecord->business_category = $data->business_category;
+        $businessRecord->business_type = $data->business_type;
+        $businessRecord->business_email = $data->business_email;
+        $businessRecord->business_facebook_url = $data->business_facebook_url;
+        $businessRecord->business_twitter_url = $data->business_twitter_url;
+        $businessRecord->business_instagram_url = $data->business_instagram_url;
+        $businessRecord->business_whatsapp_number = $data->business_whatsapp_number;
+        $businessRecord->business_contact = $data->business_contact;
+        $businessRecord->tax_identification_number = $data->tax_identification_number;
+        $businessRecord->business_description = $data->business_description;
+        $businessRecord->business_type_id = $data->business_type_id;
         $businessRecord->business_code = $code;
 
         $businessRecord->save();
 
-        $data->user->client_id = $businessRecord->id;
-        $data->user->save();
+        $user = auth()->user();
+        $user->client_id = $businessRecord->id;
+        $user->save();
 
         return $businessRecord;
     }

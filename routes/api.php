@@ -36,6 +36,7 @@ Route::prefix('/account')
     Route::get('/types', [AccountTypeController::class, 'getAccountTypes']);
     Route::get('/types/business', [AccountTypeController::class, 'getBusinessTypes']);
     Route::post('/types', [AccountTypeController::class, 'createAccountType']); 
+    Route::post('/types/business', [AccountTypeController::class, 'createBusinessType']);
 });
 
 Route::prefix('/events')->group(function () {
